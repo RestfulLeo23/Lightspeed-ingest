@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lightspeed-ingress
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lightspeed-ingress
+  template:
+    metadata:
+      labels:
+        app: lightspeed-ingress
+    spec:
+      containers:
+        - name: lightspeed-ingress
+          image: restfulleo/lightspeed-ingest:latest
+          ports:
+            - containerPort: 8084
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: 100m
+            requests:
+              memory: 256Mi
+              cpu: 100m
+      imagePullSecrets:
+        - name: regcred
